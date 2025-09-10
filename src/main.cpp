@@ -1,12 +1,12 @@
 #include <iostream>
-#include "board/ChessBoard.hpp"
+#include "boards/ChessBoard.hpp"
 #include "pieces/King.hpp"
-#include "Move.hpp"
+#include "moves/Move.hpp"
 
 int main() {
     try {
-        ChessBoard board{};
-        King king(board.getSquare(1,2), Piece::Color::White);
+        const ChessBoard board{};
+        const King king(board.getSquare(1,2), Color::White);
         std::vector<Move> possibleMoves{};
         king.getPossibleMoves(possibleMoves);
 

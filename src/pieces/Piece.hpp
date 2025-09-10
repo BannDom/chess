@@ -6,15 +6,17 @@
 #define CHESS_PIECE_HPP
 
 #include <vector>
+#include <iostream>
 
-#include "../Move.hpp"
+#include "../moves/Move.hpp"
 
 class Square;
+
+enum class Color { White, Black };
 
 class Piece {
 public:
     enum class Type { Pawn, Knight, Bishop, Rook, Queen, King };
-    enum class Color { White, Black };
 
 protected:
     Piece(Square* square, Type type, Color color);
@@ -25,21 +27,7 @@ protected:
 
     template <typename HasNeighbor, typename GetNeighbor>
     void getPossibleMovesInDirection(HasNeighbor hasNeighbor, GetNeighbor getNeighbor,
-                                     const Color playerColor, std::vector<Move> & possibleMoves) const {
-        auto beginSquare = _currentSquare;
-        auto square = _currentSquare;
-
-        while ((square->*hasNeighbor)()) {
-            square = (square->*getNeighbor)();
-            if (square->isOccupied()) {
-                if (playerColor != square->getPiece()->getColor()) {
-                    possibleMoves.emplace_back(beginSquare, square);
-                    return;
-                }
-                return;
-            }
-        }
-    }
+                                     Color playerColor, std::vector<Move> & possibleMoves) const;
 
     void getPossibleMovesInStraightDirections(std::vector<Move> & possibleMoves) const;
     void getPossibleMovesInDiagonalDirections(std::vector<Move> & possibleMoves) const;
@@ -61,5 +49,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, Color color);
     friend std::ostream& operator<<(std::ostream& os, const Piece & p);
 };
+
+#include "Piece.ipp"
 
 #endif //CHESS_PIECE_HPP

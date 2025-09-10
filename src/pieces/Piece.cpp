@@ -34,7 +34,7 @@ Piece::Type Piece::getType() const {
     return _type;
 }
 
-Piece::Color Piece::getColor() const {
+Color Piece::getColor() const {
     return _color;
 }
 
@@ -69,10 +69,10 @@ std::ostream& operator<<(std::ostream& os, const Piece::Type type) {
     return os << "Unknown";
 }
 
-std::ostream& operator<<(std::ostream& os, const Piece::Color color) {
+std::ostream& operator<<(std::ostream& os, const Color color) {
     switch (color) {
-        case Piece::Color::White: return os << "White";
-        case Piece::Color::Black: return os << "Black";
+        case Color::White: return os << "White";
+        case Color::Black: return os << "Black";
     }
     return os << "Unknown";
 }

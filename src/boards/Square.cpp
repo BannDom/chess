@@ -13,7 +13,7 @@ Square::Square(const size_t x, const size_t y, IBoard *board) : _x(x), _y(y), _b
     }
 }
 
-bool Square::isProtectedFromBelowRight(const Piece::Color playerColor) const {
+bool Square::isProtectedFromBelowRight(const Color playerColor) const {
     return isProtectedFromDirection(
         &Square::hasSquareBelowRight,
         &Square::getSquareBelowRight,
@@ -22,7 +22,7 @@ bool Square::isProtectedFromBelowRight(const Piece::Color playerColor) const {
     );
 }
 
-bool Square::isProtectedFromAboveRight(const Piece::Color playerColor) const {
+bool Square::isProtectedFromAboveRight(const Color playerColor) const {
     return isProtectedFromDirection(
         &Square::hasSquareAboveRight,
         &Square::getSquareAboveRight,
@@ -31,7 +31,7 @@ bool Square::isProtectedFromAboveRight(const Piece::Color playerColor) const {
     );
 }
 
-bool Square::isProtectedFromBelowLeft(const Piece::Color playerColor) const {
+bool Square::isProtectedFromBelowLeft(const Color playerColor) const {
     return isProtectedFromDirection(
         &Square::hasSquareBelowLeft,
         &Square::getSquareBelowLeft,
@@ -40,7 +40,7 @@ bool Square::isProtectedFromBelowLeft(const Piece::Color playerColor) const {
     );
 }
 
-bool Square::isProtectedFromAboveLeft(const Piece::Color playerColor) const {
+bool Square::isProtectedFromAboveLeft(const Color playerColor) const {
     return isProtectedFromDirection(
         &Square::hasSquareAboveLeft,
         &Square::getSquareAboveLeft,
@@ -49,7 +49,7 @@ bool Square::isProtectedFromAboveLeft(const Piece::Color playerColor) const {
     );
 }
 
-bool Square::isProtectedFromBelow(const Piece::Color playerColor) const {
+bool Square::isProtectedFromBelow(const Color playerColor) const {
     return isProtectedFromDirection(
         &Square::hasSquareBelow,
         &Square::getSquareBelow,
@@ -58,7 +58,7 @@ bool Square::isProtectedFromBelow(const Piece::Color playerColor) const {
     );
 }
 
-bool Square::isProtectedFromAbove(const Piece::Color playerColor) const {
+bool Square::isProtectedFromAbove(const Color playerColor) const {
     return isProtectedFromDirection(
         &Square::hasSquareAbove,
         &Square::getSquareAbove,
@@ -67,7 +67,7 @@ bool Square::isProtectedFromAbove(const Piece::Color playerColor) const {
     );
 }
 
-bool Square::isProtectedFromLeft(const Piece::Color playerColor) const {
+bool Square::isProtectedFromLeft(const Color playerColor) const {
     return isProtectedFromDirection(
         &Square::hasSquareLeft,
         &Square::getSquareLeft,
@@ -76,7 +76,7 @@ bool Square::isProtectedFromLeft(const Piece::Color playerColor) const {
     );
 }
 
-bool Square::isProtectedFromRight(const Piece::Color playerColor) const {
+bool Square::isProtectedFromRight(const Color playerColor) const {
     return isProtectedFromDirection(
         &Square::hasSquareRight,
         &Square::getSquareRight,
@@ -85,7 +85,7 @@ bool Square::isProtectedFromRight(const Piece::Color playerColor) const {
     );
 }
 
-bool Square::isProtectedByKnight(const Piece::Color playerColor) const {
+bool Square::isProtectedByKnight(const Color playerColor) const {
     std::vector<Square *> knightSquares{};
     getSurroundingKnightSquares(knightSquares);
 
@@ -216,7 +216,7 @@ void Square::getNeighbors(std::vector<Square *> & neighbors) const {
     if (hasSquareBelowRight())  neighbors.push_back(getSquareBelowRight());
 }
 
-bool Square::isProtected(const Piece::Color playerColor) const {
+bool Square::isProtected(const Color playerColor) const {
     if (isProtectedFromAboveRight(playerColor)) return true;
     if (isProtectedFromAboveLeft(playerColor)) return true;
     if (isProtectedFromBelowRight(playerColor)) return true;

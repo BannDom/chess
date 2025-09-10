@@ -3,4 +3,5 @@ project(chess)
 
 set(CMAKE_CXX_STANDARD 26)
 
-add_executable(chess main.cpp pieces/King.cpp board/Square.cpp)
+add_subdirectory(src)
+add_subdirectory(tst)

@@ -12,7 +12,6 @@
 
 template <std::size_t X, std::size_t Y>
 class Board : public IBoard {
-private:
     std::array<std::array<std::unique_ptr<Square>, X>, Y> _squares;
 
 public:
@@ -24,14 +23,14 @@ public:
         }
     }
 
-    [[nodiscard]] Square* getSquare(size_t x, size_t y) const override {
+    [[nodiscard]] Square* getSquare(const size_t x, const size_t y) const override {
         if (x >= X || y >= Y) {
             throw std::out_of_range("Square coordinates out of bounds");
         }
         return _squares[x][y].get();
     }
 
-    [[nodiscard]] bool hasSquare(size_t x, size_t y) const override {
+    [[nodiscard]] bool hasSquare(const size_t x, const size_t y) const override {
         return x < X && y < Y;
     }
 

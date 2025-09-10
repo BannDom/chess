@@ -11,8 +11,9 @@
 
 #include "../pieces/Piece.hpp"
 
-class Piece;
 class IBoard;
+class Piece;
+enum class Color;
 
 class Square {
     friend class IBoard;
@@ -37,31 +38,19 @@ class Square {
      */
     template <typename HasNeighbor, typename GetNeighbor, typename CanProtect>
     [[nodiscard]] bool isProtectedFromDirection(HasNeighbor hasNeighbor, GetNeighbor getNeighbor,
-                                                const CanProtect& canProtect, const Piece::Color playerColor) const {
-        auto square = this;
-        bool distanceIsOne = true;
+                                                const CanProtect& canProtect, Color playerColor) const;
 
-        while ((square->*hasNeighbor)()) {
-            square = (square->*getNeighbor)();
-            if (square->isOccupied() && playerColor == square->getPiece()->getColor()) {
-                return (square->getPiece()->*canProtect)(distanceIsOne);
-            }
-            distanceIsOne = false;
-        }
-        return false;
-    }
+    [[nodiscard]] bool isProtectedFromBelowRight(Color playerColor) const;
+    [[nodiscard]] bool isProtectedFromAboveRight(Color playerColor) const;
+    [[nodiscard]] bool isProtectedFromBelowLeft(Color playerColor) const;
+    [[nodiscard]] bool isProtectedFromAboveLeft(Color playerColor) const;
 
-    [[nodiscard]] bool isProtectedFromBelowRight(Piece::Color playerColor) const;
-    [[nodiscard]] bool isProtectedFromAboveRight(Piece::Color playerColor) const;
-    [[nodiscard]] bool isProtectedFromBelowLeft(Piece::Color playerColor) const;
-    [[nodiscard]] bool isProtectedFromAboveLeft(Piece::Color playerColor) const;
+    [[nodiscard]] bool isProtectedFromBelow(Color playerColor) const;
+    [[nodiscard]] bool isProtectedFromAbove(Color playerColor) const;
+    [[nodiscard]] bool isProtectedFromLeft(Color playerColor) const;
+    [[nodiscard]] bool isProtectedFromRight(Color playerColor) const;
 
-    [[nodiscard]] bool isProtectedFromBelow(Piece::Color playerColor) const;
-    [[nodiscard]] bool isProtectedFromAbove(Piece::Color playerColor) const;
-    [[nodiscard]] bool isProtectedFromLeft(Piece::Color playerColor) const;
-    [[nodiscard]] bool isProtectedFromRight(Piece::Color playerColor) const;
-
-    [[nodiscard]] bool isProtectedByKnight(Piece::Color playerColor) const;
+    [[nodiscard]] bool isProtectedByKnight(Color playerColor) const;
 
 public:
     Square() = delete;
@@ -103,9 +92,25 @@ public:
     void getSurroundingKnightSquares(std::vector<Square *> & knightSquares) const;
     void getNeighbors(std::vector<Square*> & neighbors) const;
 
-    [[nodiscard]] bool isProtected(Piece::Color playerColor) const;
+    [[nodiscard]] bool isProtected(Color playerColor) const;
 
     friend std::ostream& operator<<(std::ostream& os, const Square & square) ;
 };
+
+template<typename HasNeighbor, typename GetNeighbor, typename CanProtect>
+bool Square::isProtectedFromDirection(HasNeighbor hasNeighbor, GetNeighbor getNeighbor, const CanProtect &canProtect,
+                                      const Color playerColor) const {
+    auto square = this;
+    bool distanceIsOne = true;
+
+    while ((square->*hasNeighbor)()) {
+        square = (square->*getNeighbor)();
+        if (square->isOccupied() && playerColor == square->getPiece()->getColor()) {
+            return (square->getPiece()->*canProtect)(distanceIsOne);
+        }
+        distanceIsOne = false;
+    }
+    return false;
+}
 
 #endif //CHESS_SQUARE_HPP
